@@ -1,0 +1,10 @@
+{
+  "pass_name": "fusion",
+  "mae": 0.2303699060489606,
+  "rmse": 0.37640113537859304,
+  "geomean": 1.0,
+  "slowdown_rate": 0.0,
+  "win_rate": 0.0,
+  "n_train": 13560,
+  "n_test": 3381
+}

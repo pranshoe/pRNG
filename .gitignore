@@ -1,0 +1,66 @@
+# ==============================================================================
+# Segfault / LLVM ML Cost Model .gitignore
+# ==============================================================================
+
+# Virtual environments, packages & archives
+venv/
+env/
+work.zip
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.cache/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Build artifacts & binaries
+build/
+**/build/
+compile_commands.json
+**/compile_commands.json
+*.o
+*.a
+*.so
+
+# Large raw datasets (Hosted on Hugging Face: Mascinissa/LOOPerSet & pranshoe/polyhedral-cost-model-data)
+*.jsonl.gz
+*.tar.gz
+*.parquet
+*.parquet.gz
+LooperSet/
+cache_repr/
+program_graphs_raw/
+ae_embeddings_cache.json
+
+# Heavy model checkpoints & weights (*.pt, *.bin)
+*.pt
+*.pth
+*.bin
+models/runs/
+models/dual_branch_models/
+
+# Large prediction dumps
+results/ensemble_predictions_comparison.json
+results/phase3_results/phase3_holdout_predictions.parquet
+
+# Deprecated / Early prototype training scripts (Superseded by train_hybrid_cost_model.py & train_enriched_models.py)
+training/train_dual_ensemble.py
+training/train_looper_compact_gpu.py
+training/train_tierB_gnn.py
+training/train_tiling_model.py
+training/train_looper_strict_converge.py
+
+# Intermediate / Diagnostic benchmark scripts (Superseded by evaluate_hybrid_cost_model.py)
+benchmarks/benchmark_all_historical_and_new_models.py
+benchmarks/benchmark_all_models_ungated.py
+benchmarks/compare_models_benchmark.py
+benchmarks/evaluate_enriched_hybrid_benchmark.py
+benchmarks/run_categorical_diagnostics.py
+benchmarks/run_full_hybrid_comparison_categorized.py
+benchmarks/run_guardrailed_categorical_and_curves.py
+benchmarks/test_5d_structural_deep_loops.py
+benchmarks/test_looper_pipeline_sanity.py
+benchmarks/test_pipeline_sanity.py

@@ -1,0 +1,67 @@
+{
+  "model_name": "LLVM-ML-Hybrid-Cost-Model",
+  "version": "final-3.0",
+  "architecture": {
+    "type": "Hybrid Dual Ensemble (Recursive AST Tree-LSTM + Specialized Enriched XGBoost Experts)",
+    "tree_ast_branch": {
+      "num_folds": 10,
+      "embedding_dim": 180,
+      "global_scalar_features": 8,
+      "total_feature_dim": 188,
+      "training_dataset": "LOOPerSet PACT25 Compact",
+      "model_files": "tree_ast_branch/tree_xgboost_fold_{0..9}.json",
+      "val_mae": 0.0818,
+      "val_rmse": 0.1583,
+      "spearman_rho": 0.7013
+    },
+    "specialized_pass_experts": {
+      "tiling": {
+        "num_models": 10,
+        "features": 24,
+        "decision_threshold_tau": 0.30,
+        "transpiled_header": "tiling_expert/predict_tiling_gate.h",
+        "num_decision_trees": 250,
+        "geomean_speedup": 1.288
+      },
+      "unrolling": {
+        "num_models": 10,
+        "features": 20,
+        "decision_threshold_tau": 0.45,
+        "transpiled_header": "unrolling_expert/predict_unroll_gate.h",
+        "num_decision_trees": 250,
+        "geomean_speedup": 1.142
+      },
+      "fusion": {
+        "num_models": 10,
+        "features": 27,
+        "decision_threshold_tau": 0.50,
+        "transpiled_header": "fusion_expert/predict_fusion_gate.h",
+        "num_decision_trees": 250,
+        "geomean_speedup": 1.446
+      }
+    }
+  },
+  "overall_holdout_evaluation": {
+    "num_holdout_schedules": 47449,
+    "geomean_speedup": 1.293,
+    "win_rate_pct": 81.7,
+    "slowdown_rate_pct": 2.14,
+    "mae": 0.0818,
+    "spearman_rho": 0.7013
+  },
+  "in_tree_llvm_integration": {
+    "llvm_pipeline_location": "llvm/lib/Passes/PassBuilderPipelines.cpp (Lines 1352-1354)",
+    "passes": [
+      "MLFusionPass()",
+      "MLTilingPass()",
+      "MLUnrollPass()"
+    ],
+    "header_files": [
+      "in_tree_llvm_headers/predict_fusion_gate.h",
+      "in_tree_llvm_headers/predict_tiling_gate.h",
+      "in_tree_llvm_headers/predict_unroll_gate.h"
+    ],
+    "inference_latency": "< 0.5 microseconds per loop",
+    "runtime_dependencies": "None (pure self-contained static C++ branching arrays)"
+  }
+}

@@ -1,0 +1,4 @@
+[submodule "src/looper_cost_model"]
+	path = src/looper_cost_model
+	url = https://github.com/pranshoe/LOOPerCostModel.git
+	branch = segfault
